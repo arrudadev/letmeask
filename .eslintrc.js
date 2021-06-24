@@ -8,6 +8,7 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -23,8 +24,10 @@ module.exports = {
     'import',
     'import-helpers',
     'react-hooks',
+    'prettier',
   ],
   rules: {
+    'prettier/prettier': 'error',
     'class-methods-use-this': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
@@ -35,11 +38,7 @@ module.exports = {
       'warn',
       {
         newlinesBetween: 'always',
-        groups: [
-          '/^react/',
-          'module',
-          ['parent', 'sibling', 'index'],
-        ],
+        groups: ['/^react/', 'module', ['parent', 'sibling', 'index']],
         alphabetize: { order: 'asc', ignoreCase: true },
       },
     ],
