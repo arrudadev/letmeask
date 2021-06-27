@@ -1,0 +1,11 @@
+{
+  "extends": "stylelint-config-sass-guidelines",
+  "rules": {
+    "order/properties-alphabetical-order": null,
+    "selector-class-pattern": null,
+    "max-nesting-depth": null,
+    "selector-no-qualifying-type": null,
+    "selector-max-compound-selectors": null,
+    "scss/selector-no-redundant-nesting-selector": null
+  }
+}
