@@ -18,7 +18,7 @@ type RoomParams = {
 export function Room() {
   const { id: roomId } = useParams<RoomParams>();
 
-  const { user } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
   const { title, questions } = useRoom(roomId);
 
   const [newQuestion, setNewQuestion] = useState('');
@@ -64,6 +64,12 @@ export function Room() {
     }
   }
 
+  async function handleSignIn() {
+    if (!user) {
+      signInWithGoogle();
+    }
+  }
+
   return (
     <div id="page-room">
       <header>
@@ -97,7 +103,10 @@ export function Room() {
             ) : (
               <span>
                 Para enviar uma pergunta,{' '}
-                <button type="button">faça seu login</button>.
+                <button type="button" onClick={handleSignIn}>
+                  faça seu login
+                </button>
+                .
               </span>
             )}
             <Button type="submit" disabled={!user}>
