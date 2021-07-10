@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 import googleIconImg from '../../assets/images/google-icon.svg';
 import illustrationImg from '../../assets/images/illustration.svg';
@@ -8,6 +9,7 @@ import { Button } from '../../components/Button';
 import { useAuth } from '../../hooks/useAuth';
 import { database } from '../../services/firebase';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 
 export function Home() {
@@ -34,12 +36,12 @@ export function Home() {
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
     if (!roomRef.exists()) {
-      alert('Room does not exists.');
+      toast.info('Sala não encontrada!');
       return;
     }
 
     if (roomRef.val().endedAt) {
-      alert('Room already closed.');
+      toast.info('Sala já foi finalizada!');
       return;
     }
 
@@ -83,6 +85,8 @@ export function Home() {
           </form>
         </div>
       </main>
+
+      <ToastContainer autoClose={3000} />
     </div>
   );
 }
