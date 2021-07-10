@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 import answerImg from '../../assets/images/answer.svg';
 import checkImg from '../../assets/images/check.svg';
@@ -7,7 +8,7 @@ import { DeleteQuestion } from '../../components/DeleteQuestion';
 import { EndRoom } from '../../components/EndRoom';
 import { Question } from '../../components/Question';
 import { RoomCode } from '../../components/RoomCode';
-// import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { useRoom } from '../../hooks/useRoom';
 import { database } from '../../services/firebase';
 
@@ -18,11 +19,11 @@ type RoomParams = {
 };
 
 export function AdminRoom() {
+  const history = useHistory();
   const { id: roomId } = useParams<RoomParams>();
 
-  // const { user } = useAuth();
-
-  const { title, questions } = useRoom(roomId);
+  const { user } = useAuth();
+  const { title, questions, authorId } = useRoom(roomId);
 
   async function handleCheckQuestionAsAnswered(questionId: string) {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
@@ -34,6 +35,22 @@ export function AdminRoom() {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
       isHighlighted: true,
     });
+  }
+
+  useEffect(() => {
+    if (authorId) {
+      if (!user) {
+        history.push('/');
+      }
+
+      if (user?.id !== authorId) {
+        history.push('/');
+      }
+    }
+  }, [authorId]);
+
+  if (!authorId) {
+    return <div />;
   }
 
   return (
