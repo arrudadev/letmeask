@@ -60,7 +60,7 @@ npm install
 
 Run the following command in order to start the application in a development environment:
 
-```yarn dev```
+```yarn start```
 
 # :bug: Issues
 
